@@ -1,6 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 //相对路径转绝对路径
 const pathResolve = (_path) => path.resolve(__dirname, _path)
@@ -15,19 +15,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
-      },
-      {
-        test: /\.less$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          'less-loader',
-        ],
-      },
-      {
         test: /\.jsx/,
         use: 'babel-loader',
       },
@@ -39,9 +26,9 @@ module.exports = {
       filename: 'index.html',
       title: 'react+webpack',
     }),
-    new MiniCssExtractPlugin({
-      filename: 'styles/[name].[contenthash].css',
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: 'styles/[name].[contenthash].css',
+    // }),
   ],
   resolve: {
     extensions: ['.js', '.jsx', '.json'], //从左到右按顺序

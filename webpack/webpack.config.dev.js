@@ -4,6 +4,18 @@ module.exports = {
   output: {
     publicPath: '/',
   },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+      },
+    ],
+  },
   devServer: {
     host: '127.0.0.1',
     hot: true,
