@@ -1,3 +1,5 @@
+const ESLintWebpackPlugin = require('eslint-webpack-plugin')
+const path = require('path')
 module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
@@ -16,6 +18,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new ESLintWebpackPlugin({ context: path.resolve(__dirname, 'src') }),
+  ],
   devServer: {
     host: '127.0.0.1',
     hot: true,
