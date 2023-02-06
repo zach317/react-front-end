@@ -1,8 +1,9 @@
 import React from 'react'
 import { Form, Input, Select, DatePicker, Button } from 'antd'
 import dayjs from 'dayjs'
-import { userRegister } from '../services'
-import './index.less'
+import debounce from 'debounce-promise'
+import { Link } from 'react-router-dom'
+import { userRegister, checkUsername } from '../services'
 
 const { Item, useForm } = Form
 const { Password } = Input
@@ -13,18 +14,27 @@ const options = [
 const Register = () => {
   const [form] = useForm()
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     form.validateFields().then(async (values) => {
       const { birth } = values
       const time = dayjs(birth).format('YYYY-MM-DD')
       try {
         const res = await userRegister({ ...values, birth: time })
-        console.log('🚀  form.validateFields  res', res)
       } catch (error) {}
     })
   }
+
+  const handleCheckUsername = async (username) => {
+    try {
+      const res = await checkUsername({ username })
+      return res
+    } catch (error) {
+      return false
+    }
+  }
+
   return (
-    <div className='register-wrap'>
+    <>
       <div className='h1-title'>注册</div>
       <Form
         labelCol={{
@@ -33,6 +43,7 @@ const Register = () => {
         wrapperCol={{
           span: 20,
         }}
+        labelAlign='left'
         form={form}>
         <Item
           rules={[
@@ -43,6 +54,16 @@ const Register = () => {
             {
               pattern: /^[a-zA-Z][a-zA-Z0-9_-]{3,15}$/,
               message: '用户名仅支持字母、数字、_和—且必须以字母开头,4-16位',
+            },
+            {
+              validator: debounce(async (_, value) => {
+                if (!value) return
+                const res = await handleCheckUsername(value)
+                if (res.success) {
+                  return Promise.resolve()
+                }
+                return Promise.reject(new Error(res.message))
+              }, 500),
             },
           ]}
           label='用户名'
@@ -60,8 +81,7 @@ const Register = () => {
               message: '密码必须包含数字和字母,8-16位',
             },
             {
-              pattern: /^(?!.*[\s])/,
-              message: '不允许使用空格',
+              whitespace: true,
             },
           ]}
           label='密码'
@@ -111,11 +131,13 @@ const Register = () => {
           <DatePicker placeholder='请选择' style={{ width: '100%' }} />
         </Item>
       </Form>
-      <Button onClick={handleRegister} type='primary'>
+      <Button className='submit-btn' onClick={handleRegister} type='primary'>
         注册
       </Button>
-      <div></div>
-    </div>
+      <div className='user-page-change'>
+        已有账号？去<Link to='/user/login'>登录</Link>
+      </div>
+    </>
   )
 }
 
