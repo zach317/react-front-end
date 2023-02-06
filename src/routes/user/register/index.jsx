@@ -1,8 +1,8 @@
 import React from 'react'
-import { Form, Input, Select, DatePicker, Button } from 'antd'
+import { Form, Input, Select, DatePicker, Button, message } from 'antd'
 import dayjs from 'dayjs'
 import debounce from 'debounce-promise'
-import { Link } from 'react-router-dom'
+import { Link, useOutletContext, useNavigate } from 'react-router-dom'
 import { userRegister, checkUsername } from '../services'
 
 const { Item, useForm } = Form
@@ -13,14 +13,25 @@ const options = [
 ]
 const Register = () => {
   const [form] = useForm()
+  const { setLoading } = useOutletContext()
+  const navigate = useNavigate()
 
   const handleRegister = async () => {
     form.validateFields().then(async (values) => {
+      setLoading(true)
       const { birth } = values
       const time = dayjs(birth).format('YYYY-MM-DD')
       try {
         const res = await userRegister({ ...values, birth: time })
-      } catch (error) {}
+        setLoading(false)
+        if (res.success) {
+          message.success('注册成功，即将为您跳转登录页面')
+          navigate('/user/login')
+        }
+      } catch (error) {
+        message(error.message)
+        setLoading(false)
+      }
     })
   }
 
@@ -44,7 +55,8 @@ const Register = () => {
           span: 20,
         }}
         labelAlign='left'
-        form={form}>
+        form={form}
+      >
         <Item
           rules={[
             {
@@ -67,7 +79,8 @@ const Register = () => {
             },
           ]}
           label='用户名'
-          name='userName'>
+          name='username'
+        >
           <Input placeholder='请输入' />
         </Item>
         <Item
@@ -85,7 +98,8 @@ const Register = () => {
             },
           ]}
           label='密码'
-          name='password'>
+          name='password'
+        >
           <Password placeholder='请输入' />
         </Item>
         <Item
@@ -105,7 +119,8 @@ const Register = () => {
           ]}
           label='确认密码'
           dependencies={['password']}
-          name='rePassword'>
+          name='rePassword'
+        >
           <Password placeholder='请输入' />
         </Item>
         <Item
@@ -116,7 +131,8 @@ const Register = () => {
             },
           ]}
           label='性别'
-          name='gander'>
+          name='gander'
+        >
           <Select placeholder='请选择' options={options} />
         </Item>
         <Item
@@ -127,7 +143,8 @@ const Register = () => {
             },
           ]}
           label='出生年月'
-          name='birth'>
+          name='birth'
+        >
           <DatePicker placeholder='请选择' style={{ width: '100%' }} />
         </Item>
       </Form>
@@ -135,7 +152,8 @@ const Register = () => {
         注册
       </Button>
       <div className='user-page-change'>
-        已有账号？去<Link to='/user/login'>登录</Link>
+        已有账号？去
+        <Link to='/user/login'>登录</Link>
       </div>
     </>
   )

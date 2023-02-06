@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
+import { Spin } from 'antd'
+
 import './index.less'
 
 const UserLayout = () => {
+  const [loading, setLoading] = useState(false)
   return (
     <div className='user-layout-wrap'>
-      <div className='form-wrap'>
-        <Outlet />
-      </div>
+      <Spin spinning={loading}>
+        <div className='form-wrap'>
+          <Outlet context={{ setLoading }} />
+        </div>
+      </Spin>
     </div>
   )
 }
