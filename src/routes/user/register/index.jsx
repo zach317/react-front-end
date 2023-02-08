@@ -87,6 +87,22 @@ const Register = () => {
           rules={[
             {
               required: true,
+              message: '请输入昵称',
+            },
+            {
+              pattern: /^[^\s]*$/,
+              message: '不能输入空格',
+            },
+          ]}
+          label='昵称'
+          name='nickname'
+        >
+          <Input maxLength={8} placeholder='请输入' />
+        </Item>
+        <Item
+          rules={[
+            {
+              required: true,
               message: '请输入密码',
             },
             {
@@ -94,7 +110,8 @@ const Register = () => {
               message: '密码必须包含数字和字母,8-16位',
             },
             {
-              whitespace: true,
+              pattern: /^[^\s]*$/,
+              message: '不能输入空格',
             },
           ]}
           label='密码'

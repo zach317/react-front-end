@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, message } from 'antd'
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
+import crypto from '../../../utils/crypto'
 import { userLogin } from '../services'
 
 const { Item, useForm } = Form
@@ -18,6 +19,8 @@ const Login = () => {
         const res = await userLogin(values)
         setLoading(false)
         if (res.success) {
+          const userInfo = crypto.encrypt(res.data)
+          localStorage.setItem('user', userInfo)
           message.success('登录成功')
           navigate('/')
           return
