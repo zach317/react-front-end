@@ -1,0 +1,33 @@
+.carousel-wrap {
+  position: relative;
+  .arrow-btn {
+    border: none;
+    height: 36px;
+    width: 36px;
+    transition: 1s;
+    border-radius: 50%;
+    background-color: #001529;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    transform: translateY(-50%);
+    opacity: 0.3;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  .right-btn {
+    right: 40px;
+  }
+  .left-btn {
+    left: 40px;
+  }
+  .carousel-content {
+    height: 260px;
+    color: #fff;
+    line-height: 260px;
+    text-align: center;
+    background-color: #364d79;
+  }
+}
