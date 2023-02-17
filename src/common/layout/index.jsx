@@ -1,13 +1,34 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
+import { message } from 'antd'
 import Header from '../header'
+import crypto from '../../utils/crypto'
+import { getUserinfo } from './services'
+import './index.less'
 
-const layout = (props) => {
-  console.log('🚀  layout  props', props)
+const id = localStorage.getItem('userId')
+const userId = id && crypto.decrypt(id)
+const layout = () => {
+  const [user, setUser] = useState({})
+  const getUserinfoFunc = async () => {
+    try {
+      const res = await getUserinfo({ userId })
+      if (res.success) {
+        setUser(res.data)
+      }
+    } catch (error) {
+      message.warning(error.message)
+    }
+  }
+  useEffect(() => {
+    getUserinfoFunc()
+  }, [])
   return (
-    <div>
-      <Header />
-      <Outlet />
+    <div className='layout-wrap'>
+      <Header user={user} />
+      <div className='main-wrap'>
+        <Outlet context={{ user, getUserinfoFunc }} />
+      </div>
     </div>
   )
 }

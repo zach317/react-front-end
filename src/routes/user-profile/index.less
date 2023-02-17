@@ -1,0 +1,64 @@
+.user-profile-wrap {
+  padding: 12px;
+  display: flex;
+  .user-profile-item {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 0 5px;
+  }
+  .user-profile-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .user-category-wrap {
+      display: flex;
+      margin: 10px 0;
+      .category-item {
+        margin: 10px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .category-label {
+          font-size: 12px;
+        }
+        .category-value {
+          font-size: 18px;
+          font-weight: bold;
+        }
+        span {
+          margin: 5px 10px;
+        }
+      }
+    }
+  }
+  .user-profile-right {
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      .btn {
+        margin: 12px;
+      }
+    }
+    .show-wrap {
+      .show-item {
+        display: flex;
+        span {
+          font-size: 14px;
+          margin-bottom: 24px;
+          color: rgba(0, 0, 0, 0.88);
+          height: 32px;
+          line-height: 32px;
+        }
+        .show-label {
+          flex: 1;
+        }
+        .show-value {
+          flex: 5;
+        }
+      }
+    }
+  }
+}

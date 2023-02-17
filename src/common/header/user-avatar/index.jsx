@@ -3,10 +3,10 @@ import React from 'react'
 import { Dropdown, Avatar, Modal, message } from 'antd'
 import { UserOutlined, DownOutlined } from '@ant-design/icons'
 import { useNavigate, Link } from 'react-router-dom'
-import crypto from '../../../utils/crypto'
 import './index.less'
 
-const UserAvatar = () => {
+const UserAvatar = (props) => {
+  const { user } = props || {}
   const navigate = useNavigate()
   const handleLogout = () => {
     Modal.confirm({
@@ -19,18 +19,17 @@ const UserAvatar = () => {
     })
   }
   const items = [
-    // {
-    //   key: '1',
-    //   label: <a>个人中心</a>,
-    // },
+    {
+      key: '1',
+      label: <a onClick={() => navigate('/user-profile')}>个人中心</a>,
+    },
     {
       key: '2',
       label: <a onClick={handleLogout}>退出登录</a>,
     },
   ]
-  const user = localStorage.getItem('user')
-  const userInfo = user && crypto.decrypt(user)
-  const { nickname } = userInfo || {}
+
+  const { nickname } = user || {}
   return (
     <div className='user-avatar'>
       {nickname ? (

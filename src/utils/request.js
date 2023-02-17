@@ -4,7 +4,7 @@ const request = axios.create({
   timeout: 5000,
   baseURL: '/api',
 })
-
+const excludeRouter = ['/home']
 // 添加请求拦截器
 request.interceptors.request.use(
   // 在发送请求之前做些什么
@@ -27,7 +27,14 @@ request.interceptors.response.use(
     return response.data
   },
   // 对响应错误做点什么
-  (error) => Promise.reject(error.response.data)
+  (error) => {
+    if (error.response.status === 401) {
+      localStorage.clear()
+      if (excludeRouter.includes(window.location.pathname)) return
+      window.location.pathname = '/user/login'
+    }
+    return Promise.reject(error.response.data)
+  }
 )
 
 export default request

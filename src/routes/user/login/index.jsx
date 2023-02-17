@@ -19,8 +19,8 @@ const Login = () => {
         const res = await userLogin(values)
         setLoading(false)
         if (res.success) {
-          const userInfo = crypto.encrypt(res.data)
-          localStorage.setItem('user', userInfo)
+          const userId = crypto.encrypt(res.data)
+          localStorage.setItem('userId', userId)
           message.success('登录成功')
           navigate('/')
           return

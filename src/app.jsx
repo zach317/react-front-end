@@ -5,6 +5,7 @@ import UserLayout from './routes/user/layout'
 import Register from './routes/user/register'
 import Login from './routes/user/login'
 import Layout from './common/layout'
+import UserProfile from './routes/user-profile'
 import './index.less'
 
 const App = () => (
@@ -12,6 +13,7 @@ const App = () => (
     <Routes>
       <Route path='/' element={<Layout />}>
         <Route path='/' element={<Home />} />
+        <Route path='/user-profile' element={<UserProfile />} />
       </Route>
       <Route path='/user' element={<UserLayout />}>
         <Route path='/user/register' element={<Register />} />
