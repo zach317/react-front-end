@@ -2,8 +2,12 @@ import React, { useState } from 'react'
 import { Form, Input, Button, DatePicker, Select, Avatar, message } from 'antd'
 import { UserOutlined } from '@ant-design/icons'
 import dayjs from 'dayjs'
-import debounce from 'debounce-promise'
 import { useOutletContext } from 'react-router-dom'
+import {
+  debounceReturn,
+  NO_SPACER_PATTERN,
+  USERNAME_PATTERN,
+} from '@/utils/utils'
 import { checkUsername, updateUserInfo } from './services'
 import './index.less'
 
@@ -70,20 +74,11 @@ const UserProfile = () => {
           message: '请输入用户名',
         },
         {
-          pattern: /^[a-zA-Z][a-zA-Z0-9_-]{3,15}$/,
+          pattern: USERNAME_PATTERN,
           message: '用户名仅支持字母、数字、_和—且必须以字母开头,4-16位',
         },
         {
-          validator: debounce(async (_, value) => {
-            if (!value) return
-            // 不校验当前用户名
-            if (value === username) return
-            const res = await handleCheckUsername(value)
-            if (res.success) {
-              return Promise.resolve()
-            }
-            return Promise.reject(new Error(res.message))
-          }, 500),
+          validator: debounceReturn(handleCheckUsername, username),
         },
       ],
     },
@@ -97,7 +92,7 @@ const UserProfile = () => {
           message: '请输入昵称',
         },
         {
-          pattern: /^[^\s]*$/,
+          pattern: NO_SPACER_PATTERN,
           message: '不能输入空格',
         },
       ],

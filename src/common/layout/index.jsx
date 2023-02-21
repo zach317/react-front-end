@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { message } from 'antd'
+import crypto from '@/utils/crypto'
 import Header from '../header'
-import crypto from '../../utils/crypto'
 import { getUserinfo } from './services'
 import './index.less'
 
@@ -13,7 +13,7 @@ const layout = () => {
   const getUserinfoFunc = async () => {
     try {
       const res = await getUserinfo({ userId })
-      if (res.success) {
+      if (res?.success) {
         setUser(res.data)
       }
     } catch (error) {

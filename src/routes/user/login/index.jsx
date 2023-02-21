@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, message } from 'antd'
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
-import crypto from '../../../utils/crypto'
+import crypto from '@/utils/crypto'
 import { userLogin } from '../services'
 
 const { Item, useForm } = Form

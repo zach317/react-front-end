@@ -4,7 +4,7 @@ const request = axios.create({
   timeout: 5000,
   baseURL: '/api',
 })
-const excludeRouter = ['/home']
+const excludeRouter = ['/']
 // 添加请求拦截器
 request.interceptors.request.use(
   // 在发送请求之前做些什么

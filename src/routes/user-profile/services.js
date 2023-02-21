@@ -1,4 +1,4 @@
-import request from '../../utils/request'
+import request from '@/utils/request'
 // 查询username是否存在
 export function checkUsername(data) {
   return request('/users/check-username', {

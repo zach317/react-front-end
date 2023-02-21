@@ -1,8 +1,13 @@
 import React from 'react'
 import { Form, Input, Select, DatePicker, Button, message } from 'antd'
 import dayjs from 'dayjs'
-import debounce from 'debounce-promise'
 import { Link, useOutletContext, useNavigate } from 'react-router-dom'
+import {
+  debounceReturn,
+  PASSWORD_PATTERN,
+  USERNAME_PATTERN,
+  NO_SPACER_PATTERN,
+} from '@/utils/utils'
 import { userRegister, checkUsername } from '../services'
 
 const { Item, useForm } = Form
@@ -64,18 +69,11 @@ const Register = () => {
               message: '请输入用户名',
             },
             {
-              pattern: /^[a-zA-Z][a-zA-Z0-9_-]{3,15}$/,
+              pattern: USERNAME_PATTERN,
               message: '用户名仅支持字母、数字、_和—且必须以字母开头,4-16位',
             },
             {
-              validator: debounce(async (_, value) => {
-                if (!value) return
-                const res = await handleCheckUsername(value)
-                if (res.success) {
-                  return Promise.resolve()
-                }
-                return Promise.reject(new Error(res.message))
-              }, 500),
+              validator: debounceReturn(handleCheckUsername),
             },
           ]}
           label='用户名'
@@ -90,7 +88,7 @@ const Register = () => {
               message: '请输入昵称',
             },
             {
-              pattern: /^[^\s]*$/,
+              pattern: NO_SPACER_PATTERN,
               message: '不能输入空格',
             },
           ]}
@@ -106,11 +104,11 @@ const Register = () => {
               message: '请输入密码',
             },
             {
-              pattern: /(?=.*[\d])?(?=.*[a-zA-Z])(?=.*[\d]){8,16}/,
+              pattern: PASSWORD_PATTERN,
               message: '密码必须包含数字和字母,8-16位',
             },
             {
-              pattern: /^[^\s]*$/,
+              pattern: NO_SPACER_PATTERN,
               message: '不能输入空格',
             },
           ]}
