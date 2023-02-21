@@ -6,9 +6,9 @@ import Header from '../header'
 import { getUserinfo } from './services'
 import './index.less'
 
-const id = localStorage.getItem('userId')
-const userId = id && crypto.decrypt(id)
 const layout = () => {
+  const id = localStorage.getItem('userId')
+  const userId = id && crypto.decrypt(id)
   const [user, setUser] = useState({})
   const getUserinfoFunc = async () => {
     try {
@@ -21,8 +21,10 @@ const layout = () => {
     }
   }
   useEffect(() => {
-    getUserinfoFunc()
-  }, [])
+    if (userId) {
+      getUserinfoFunc()
+    }
+  }, [userId])
   return (
     <div className='layout-wrap'>
       <Header user={user} />
