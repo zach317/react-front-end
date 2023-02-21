@@ -1,8 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-//相对路径转绝对路径
+// 相对路径转绝对路径
 const pathResolve = (_path) => path.resolve(__dirname, _path)
 
 module.exports = {
@@ -10,7 +9,7 @@ module.exports = {
   output: {
     path: pathResolve('../dist'),
     filename: 'scripts/[name].bundle.js',
-    clean: true, //每次执行完打包之后都将上次打包残留的文件清理掉
+    clean: true, // 每次执行完打包之后都将上次打包残留的文件清理掉
   },
   module: {
     rules: [
@@ -31,6 +30,9 @@ module.exports = {
     // }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.json'], //从左到右按顺序
+    extensions: ['.js', '.jsx', '.json'], // 从左到右按顺序
+    alias: {
+      '@': path.join(__dirname, '../src'),
+    },
   },
 }

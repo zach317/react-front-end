@@ -10,6 +10,11 @@
     "sourceType": "module"
   },
   "plugins": ["react"],
+  "settings": {
+    "import/resolver": {
+      "alias": [["@", "./src"]]
+    }
+  },
   "rules": {
     "semi": 0,
     "import/no-extraneous-dependencies": 0,
