@@ -10,12 +10,17 @@ module.exports = {
     path: pathResolve('../dist'),
     filename: 'scripts/[name].bundle.js',
     clean: true, // 每次执行完打包之后都将上次打包残留的文件清理掉
+    assetModuleFilename: 'images/[contenthash][ext]',
   },
   module: {
     rules: [
       {
         test: /\.jsx/,
         use: 'babel-loader',
+      },
+      {
+        test: /\.png$/,
+        type: 'asset/resource',
       },
     ],
   },
@@ -24,6 +29,7 @@ module.exports = {
       template: pathResolve('../public/index.html'),
       filename: 'index.html',
       title: 'react+webpack',
+      favicon: pathResolve('../public/favicon.ico'),
     }),
     // new MiniCssExtractPlugin({
     //   filename: 'styles/[name].[contenthash].css',
