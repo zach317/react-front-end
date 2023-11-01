@@ -14,3 +14,11 @@ export function updateUserInfo(data) {
     data,
   })
 }
+
+// 更新头像
+export function updateAvatar(data) {
+  return request('/users/update-avatar', {
+    method: 'POST',
+    data,
+  })
+}
