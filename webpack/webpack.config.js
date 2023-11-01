@@ -9,5 +9,7 @@ module.exports = (env) => {
       return merge(commonConfig, devConfig)
     case env.production:
       return merge(commonConfig, prodConfig)
+    default:
+      return merge(commonConfig, devConfig)
   }
 }

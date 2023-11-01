@@ -176,21 +176,30 @@ const UserProfile = () => {
     </Form>
   )
 
+  const handleAvatarChange = async ({ file }) => {
+    if (file.status === 'done') {
+      message.success('上传成功')
+      await getUserinfoFunc()
+    }
+  }
+
   return (
     <div className='user-profile-wrap'>
       <div className='user-profile-left user-profile-item'>
         <div className='avatar-relative'>
           <Upload
+            name='avatar'
+            onChange={handleAvatarChange}
             showUploadList={false}
             action='/api/users/update-avatar'
             className='upload-avatar'
-            headers={{
-              'Content-Type': 'multipart/form-data',
+            data={{
+              id,
             }}
           >
             <EditOutlined className='edit-logo' />
           </Upload>
-          <Avatar size={100} icon={<UserOutlined />} />
+          <Avatar size={100} icon={<UserOutlined />} src={`${user.avatar}`} />
         </div>
         <div className='user-category-wrap'>
           <div className='category-item'>

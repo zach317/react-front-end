@@ -35,8 +35,8 @@ const UserAvatar = (props) => {
       {nickname ? (
         <Dropdown menu={{ items }}>
           <div className='avatar-wrap' onClick={(e) => e.preventDefault()}>
-            <span>{nickname}</span>
-            <Avatar size={55} icon={<UserOutlined />} />
+            <span className='avatar-nickname'>{nickname}</span>
+            <Avatar size={45} icon={<UserOutlined />} src={`${user.avatar}`} />
             <DownOutlined />
           </div>
         </Dropdown>
