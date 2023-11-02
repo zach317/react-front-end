@@ -13,33 +13,33 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    .avatar-relative {
-      position: relative;
-      cursor: pointer;
+
+    .upload-avatar {
+      border-radius: 50%;
+      display: flex;
       &:hover {
-        .upload-avatar {
-          width: 100px;
-          height: 100px;
-          .edit-logo {
-            font-size: 30px;
-          }
+        background-color: #33333377;
+        img {
+          filter: opacity(0.6);
+        }
+        .edit-logo {
+          font-size: 30px;
         }
       }
-      .upload-avatar {
+      .avatar-relative {
+        position: relative;
+        cursor: pointer;
+      }
+      .edit-logo {
         position: absolute;
-        width: 0;
-        height: 0;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #33333377;
+        font-size: 0;
         z-index: 2;
-        .edit-logo {
-          font-size: 0;
-        }
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
     }
+
     .user-category-wrap {
       display: flex;
       margin: 10px 0;

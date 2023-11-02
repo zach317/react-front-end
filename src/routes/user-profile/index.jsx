@@ -41,7 +41,6 @@ const UserProfile = () => {
         const res = await updateUserInfo({
           ...values,
           birth: formatBirth(values.birth),
-          id,
         })
         if (res.success) {
           await getUserinfoFunc()
@@ -186,21 +185,21 @@ const UserProfile = () => {
   return (
     <div className='user-profile-wrap'>
       <div className='user-profile-left user-profile-item'>
-        <div className='avatar-relative'>
-          <Upload
-            name='avatar'
-            onChange={handleAvatarChange}
-            showUploadList={false}
-            action='/api/users/update-avatar'
-            className='upload-avatar'
-            data={{
-              id,
-            }}
-          >
+        <Upload
+          name='avatar'
+          onChange={handleAvatarChange}
+          showUploadList={false}
+          action='/api/users/update-avatar'
+          className='upload-avatar'
+          headers={{
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          }}
+        >
+          <div className='avatar-relative'>
             <EditOutlined className='edit-logo' />
-          </Upload>
-          <Avatar size={100} icon={<UserOutlined />} src={`${user.avatar}`} />
-        </div>
+            <Avatar size={100} icon={<UserOutlined />} src={`${user.avatar}`} />
+          </div>
+        </Upload>
         <div className='user-category-wrap'>
           <div className='category-item'>
             <span className='category-label'>类目1</span>

@@ -12,7 +12,7 @@ const layout = () => {
   const [user, setUser] = useState({})
   const getUserinfoFunc = async () => {
     try {
-      const res = await getUserinfo({ userId })
+      const res = await getUserinfo()
       if (res?.success) {
         setUser(res.data)
       }

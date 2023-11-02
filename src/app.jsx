@@ -6,6 +6,7 @@ import Register from './routes/user/register'
 import Login from './routes/user/login'
 import Layout from './common/layout'
 import UserProfile from './routes/user-profile'
+import AccountManage from './routes/account-manage'
 import './index.less'
 
 const App = () => (
@@ -14,6 +15,7 @@ const App = () => (
       <Route path='/' element={<Layout />}>
         <Route path='/' element={<Home />} />
         <Route path='/user-profile' element={<UserProfile />} />
+        <Route path='/account-manage' element={<AccountManage />} />
       </Route>
       <Route path='/user' element={<UserLayout />}>
         <Route path='/user/register' element={<Register />} />
