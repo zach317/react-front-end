@@ -26,7 +26,7 @@ const options = [
 ]
 const UserProfile = () => {
   const { user, getUserinfoFunc = () => {} } = useOutletContext()
-  const { age, birth, gender, nickname, username, id } = user
+  const { age, birth, gender, nickname, username } = user
   const formatBirth = (date) => dayjs(date).format('YYYY-MM-DD')
   const { Item, useForm } = Form
   const [form] = useForm()

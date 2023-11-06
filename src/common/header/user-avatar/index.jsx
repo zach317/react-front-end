@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import { Dropdown, Avatar, Modal, message } from 'antd'
-import { UserOutlined, DownOutlined } from '@ant-design/icons'
+import { UserOutlined } from '@ant-design/icons'
 import { useNavigate, Link } from 'react-router-dom'
 import './index.less'
 
@@ -20,11 +20,15 @@ const UserAvatar = (props) => {
   }
   const items = [
     {
-      key: '1',
+      key: 'user-profile',
       label: <a onClick={() => navigate('/user-profile')}>个人中心</a>,
     },
     {
-      key: '2',
+      key: 'account-manage',
+      label: <a onClick={() => navigate('/account-manage')}>账号管理</a>,
+    },
+    {
+      key: 'logout',
       label: <a onClick={handleLogout}>退出登录</a>,
     },
   ]
@@ -36,8 +40,13 @@ const UserAvatar = (props) => {
         <Dropdown menu={{ items }}>
           <div className='avatar-wrap' onClick={(e) => e.preventDefault()}>
             <span className='avatar-nickname'>{nickname}</span>
-            <Avatar size={45} icon={<UserOutlined />} src={`${user.avatar}`} />
-            <DownOutlined />
+            {user.avatar && (
+              <Avatar
+                size={35}
+                icon={<UserOutlined />}
+                src={`${user.avatar}`}
+              />
+            )}
           </div>
         </Dropdown>
       ) : (
