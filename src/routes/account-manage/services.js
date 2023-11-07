@@ -13,15 +13,15 @@ export function sendSms(data) {
   })
 }
 
-export function bindPhone(data) {
-  return request('/users/bind-phone', {
+export function bindAccount(data) {
+  return request('/users/bind-account', {
     method: 'POST',
     data,
   })
 }
 
-export function checkPhone(data) {
-  return request('/users/check-phone', {
+export function checkBind(data) {
+  return request('/users/check-bind', {
     method: 'POST',
     data,
   })

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { Modal, message } from 'antd'
 import { getUserAccountInfo } from './services'
-import { Modal } from 'antd'
 import AccountInfoItem from './account-info-item'
-import PhoneSetting from './phone-setting'
+import BindSetting from './bind-setting'
 import './index.less'
 
 const AccountManage = () => {
@@ -12,7 +12,7 @@ const AccountManage = () => {
       const res = await getUserAccountInfo()
       setAccountInfo(res.data)
     } catch (error) {
-      console.log('🚀  getAccountInfo  error:', error)
+      message.warning(error.message)
     }
   }
 
@@ -20,12 +20,27 @@ const AccountManage = () => {
     getAccountInfo()
   }, [])
 
-  const handleChangePhone = () => {
+  const handleChangeBind = (type) => {
+    const titleObj = {
+      phone: '手机号',
+      email: '邮箱',
+    }
+    const bindDataObj = {
+      phone,
+      email,
+    }
+    const title = titleObj[type]
     const modal = Modal.confirm()
     modal.update({
-      title: '手机号',
+      title,
       content: (
-        <PhoneSetting getInfo={getAccountInfo} phone={phone} modal={modal} />
+        <BindSetting
+          getInfo={getAccountInfo}
+          bindData={bindDataObj[type]}
+          modal={modal}
+          type={type}
+          title={title}
+        />
       ),
       icon: null,
       footer: null,
@@ -38,9 +53,13 @@ const AccountManage = () => {
         <AccountInfoItem
           title='手机号'
           data={phone}
-          onClick={handleChangePhone}
+          onClick={() => handleChangeBind('phone')}
         />
-        <AccountInfoItem title='邮箱' data={email} />
+        <AccountInfoItem
+          title='邮箱'
+          data={email}
+          onClick={() => handleChangeBind('email')}
+        />
         <AccountInfoItem title='密码' data='已设置，可通过账户密码登录' />
       </div>
     </div>

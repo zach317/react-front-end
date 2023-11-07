@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
 import { Input, Button, Form, Space, message } from 'antd'
-import { PHONE_PATTERN } from '@/utils/utils.js'
-import { sendSms, bindPhone, checkPhone } from '../services'
+import { PHONE_PATTERN, EMAIL_PATTERN } from '@/utils/utils.js'
+import { sendSms, bindAccount, checkBind } from '../services'
 import './index.less'
 
 const { Item, useForm } = Form
 
-const PhoneSetting = ({ phone, modal, getInfo }) => {
+const BindSetting = ({ bindData, type: bindType, modal, getInfo, title }) => {
   let intervalId = null
   const initTime = 60
+  const pattern = bindType === 'email' ? EMAIL_PATTERN : PHONE_PATTERN
   const [form] = useForm()
-  const [step, setStep] = useState(phone ? 1 : 2)
+  const [step, setStep] = useState(bindData ? 1 : 2)
   const [count, setCount] = useState(initTime)
   const handleSendSms = () => {
-    form.validateFields(['phone']).then(async (value) => {
+    form.validateFields([bindType]).then(async (value) => {
       try {
         if (step === 1) {
-          const checkRes = await checkPhone(value)
+          const checkRes = await checkBind(value)
           if (!checkRes.success) {
             message.warning(checkRes.message)
             return
@@ -54,7 +55,7 @@ const PhoneSetting = ({ phone, modal, getInfo }) => {
         form.resetFields()
         return
       }
-      const res = await bindPhone(values)
+      const res = await bindAccount(values)
       if (res.success) {
         message.success('绑定成功')
         modal.destroy()
@@ -63,25 +64,27 @@ const PhoneSetting = ({ phone, modal, getInfo }) => {
     })
   }
   return (
-    <div className='phone-setting-wrap'>
-      <p>
-        {step === 1 ? '请输入完整的手机号' : '请输入要绑定的手机号'}
+    <div className='bind-setting-wrap'>
+      <p className='bind-title-tip'>
+        {step === 1
+          ? `请输入${bindData}完整的${title}`
+          : `请输入要绑定的${title}`}
         ，并获取验证码
       </p>
-      <Form form={form}>
+      <Form labelCol={{ span: 6 }} wrapperCol={{ span: 18 }} form={form}>
         <Item
           rules={[
             {
               required: true,
-              message: '请输入手机号',
+              message: `请输入${title}`,
             },
             {
-              pattern: PHONE_PATTERN,
-              message: '请输入正确的手机号',
+              pattern,
+              message: `请输入正确的${title}`,
             },
           ]}
-          label='手机号'
-          name='phone'
+          label={title}
+          name={bindType}
         >
           <Input placeholder='请输入' />
         </Item>
@@ -101,10 +104,12 @@ const PhoneSetting = ({ phone, modal, getInfo }) => {
             </Item>
             <Button
               onClick={handleSendSms}
-              disabled={count < initTime}
+              disabled={count < initTime && count !== 0}
               type='primary'
             >
-              {`获取验证码 ${count >= initTime ? '' : `(${count})`}`}
+              {`获取验证码 ${
+                count >= initTime || count === 0 ? '' : `(${count})`
+              }`}
             </Button>
           </Space>
         </Item>
@@ -119,4 +124,4 @@ const PhoneSetting = ({ phone, modal, getInfo }) => {
   )
 }
 
-export default PhoneSetting
+export default BindSetting
