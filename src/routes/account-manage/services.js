@@ -19,3 +19,10 @@ export function bindPhone(data) {
     data,
   })
 }
+
+export function checkPhone(data) {
+  return request('/users/check-phone', {
+    method: 'POST',
+    data,
+  })
+}

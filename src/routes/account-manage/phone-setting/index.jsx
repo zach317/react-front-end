@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { Input, Button, Form, Space, message } from 'antd'
 import { PHONE_PATTERN } from '@/utils/utils.js'
-import { sendSms, bindPhone } from '../services'
+import { sendSms, bindPhone, checkPhone } from '../services'
 import './index.less'
 
 const { Item, useForm } = Form
 
 const PhoneSetting = ({ phone, modal, getInfo }) => {
+  let intervalId = null
   const initTime = 60
   const [form] = useForm()
   const [step, setStep] = useState(phone ? 1 : 2)
@@ -14,13 +15,20 @@ const PhoneSetting = ({ phone, modal, getInfo }) => {
   const handleSendSms = () => {
     form.validateFields(['phone']).then(async (value) => {
       try {
+        if (step === 1) {
+          const checkRes = await checkPhone(value)
+          if (!checkRes.success) {
+            message.warning(checkRes.message)
+            return
+          }
+        }
         const res = await sendSms(value)
         if (res.success) {
           message.success(
             `发送成功，您的验证码为${res.data.code},不过这没什么用，你随便输也能校验通过`
           )
           setCount(initTime - 1)
-          const intervalId = setInterval(() => {
+          intervalId = setInterval(() => {
             setCount((prevCount) => {
               if (prevCount > 1) {
                 return prevCount - 1
@@ -38,6 +46,14 @@ const PhoneSetting = ({ phone, modal, getInfo }) => {
   }
   const handleSubmit = () => {
     form.validateFields().then(async (values) => {
+      if (step === 1) {
+        setStep(2)
+        intervalId = null
+        clearInterval(intervalId) // 清除 setInterval
+        setCount(0)
+        form.resetFields()
+        return
+      }
       const res = await bindPhone(values)
       if (res.success) {
         message.success('绑定成功')
