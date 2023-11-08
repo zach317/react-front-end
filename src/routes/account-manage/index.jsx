@@ -3,6 +3,7 @@ import { Modal, message } from 'antd'
 import { getUserAccountInfo } from './services'
 import AccountInfoItem from './account-info-item'
 import BindSetting from './bind-setting'
+import ChangePwd from './change-pwd'
 import './index.less'
 
 const AccountManage = () => {
@@ -46,6 +47,16 @@ const AccountManage = () => {
       footer: null,
     })
   }
+
+  const handleChangePwd = () => {
+    const modal = Modal.confirm()
+    modal.update({
+      title: '密码',
+      content: <ChangePwd modal={modal} />,
+      icon: null,
+      footer: null,
+    })
+  }
   return (
     <div className='account-manage-wrap'>
       <div className='account-bind'>
@@ -60,7 +71,11 @@ const AccountManage = () => {
           data={email}
           onClick={() => handleChangeBind('email')}
         />
-        <AccountInfoItem title='密码' data='已设置，可通过账户密码登录' />
+        <AccountInfoItem
+          onClick={handleChangePwd}
+          title='密码'
+          data='已设置，可通过账户密码登录'
+        />
       </div>
     </div>
   )

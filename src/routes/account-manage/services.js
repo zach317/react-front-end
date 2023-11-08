@@ -26,3 +26,17 @@ export function checkBind(data) {
     data,
   })
 }
+
+export function checkPwd(data) {
+  return request('/users/check-password', {
+    method: 'POST',
+    data,
+  })
+}
+
+export function changePwd(data) {
+  return request('/users/change-password', {
+    method: 'POST',
+    data,
+  })
+}
