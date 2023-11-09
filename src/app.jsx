@@ -7,6 +7,7 @@ import Login from './routes/user/login'
 import Layout from './common/layout'
 import UserProfile from './routes/user-profile'
 import AccountManage from './routes/account-manage'
+import DesignSystem from './design'
 import './index.less'
 
 const App = () => (
@@ -21,6 +22,7 @@ const App = () => (
         <Route path='/user/register' element={<Register />} />
         <Route path='/user/login' element={<Login />} />
       </Route>
+      <Route path='/design-system' element={<DesignSystem />} />
     </Routes>
   </BrowserRouter>
 )
