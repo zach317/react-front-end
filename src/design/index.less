@@ -1,11 +1,36 @@
 .design-system-wrap {
   display: flex;
   .system-design-component {
-    background-color: black;
+    margin: 0 12px;
+    padding: 12px;
+    border: 1px solid #ccc;
   }
   .design-main {
-    background-color: blue;
     flex: 1;
+    border: 1px solid #ccc;
+    padding: 12px;
     height: 100%;
+    .drop-card-wrap {
+      .empty-drop-card {
+        display: flex;
+        border: 1px dashed pink;
+        padding: 8px;
+        margin: 4px;
+        justify-content: center;
+        // .empty-icon {
+        //   align-items: center;
+        // }
+      }
+    }
+  }
+}
+
+.design-card-wrap {
+  transition-duration: 0.3s;
+  &:focus,
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+    cursor: move;
   }
 }
