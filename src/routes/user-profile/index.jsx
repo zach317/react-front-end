@@ -18,6 +18,7 @@ import {
   USERNAME_PATTERN,
 } from '@/utils/utils'
 import { checkUsername, updateUserInfo } from './services'
+import { t } from '@/utils/i18n'
 import './index.less'
 
 const options = [
@@ -91,7 +92,7 @@ const UserProfile = () => {
       ],
     },
     {
-      name: '昵称',
+      name: t('昵称'),
       data: nickname,
       title: 'nickname',
       rules: [
@@ -106,19 +107,19 @@ const UserProfile = () => {
       ],
     },
     {
-      name: '年龄',
+      name: t('年龄'),
       data: age,
       title: 'age',
       disabled: true,
     },
     {
-      name: '性别',
+      name: t('性别'),
       data: gender,
       title: 'gender',
       render: <Select value={gender} options={options} />,
     },
     {
-      name: '生日',
+      name: t('生日'),
       data: formatBirth(birth),
       title: 'birth',
       render: (
@@ -227,7 +228,7 @@ const UserProfile = () => {
           </Button>
           {isEdit && (
             <Button className='btn' onClick={() => setIsEdit(false)}>
-              取消
+              {t('取消')}
             </Button>
           )}
         </div>

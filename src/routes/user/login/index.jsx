@@ -3,6 +3,7 @@ import { Form, Input, Button, message } from 'antd'
 import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import crypto from '@/utils/crypto'
 import { userLogin } from '../services'
+import { t } from '@/utils/i18n'
 
 const { Item, useForm } = Form
 const { Password } = Input
@@ -71,7 +72,7 @@ const Login = () => {
         </Item>
       </Form>
       <Button className='submit-btn' onClick={handleLogin} type='primary'>
-        登录
+        {t('登录')}
       </Button>
       <div className='user-page-change'>
         还没账号？去
